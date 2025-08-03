@@ -1,13 +1,134 @@
 {% extends 'blog/base.html' %}
 {% block content %}
+{% load static %}
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
+
+/* Full-page gradient background */
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #181d27 0%, #23283e 100%);
+    font-family: 'Montserrat', 'Poppins', Arial, sans-serif;
+    color: #e0e6f0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* ONLY THE CONTAINER IS FLEX TO CENTER! */
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.row {
+    width: 100%;
+}
+
+.col-md-6 {
+    /* Remove any flex from here; let Bootstrap control it. */
+}
+
+/* Glassmorphism card */
+.card.my-5 {
+    background: rgba(40, 46, 62, 0.28);
+    border-radius: 24px;
+    backdrop-filter: blur(18px) saturate(170%);
+    box-shadow: 0 11px 40px 0 rgba(34, 40, 64, 0.51), 0 2px 12px rgba(0,255,255, 0.08);
+    border: 1.5px solid rgba(255,255,255,0.12);
+    padding: 2.7rem 2rem;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 480px;   /* KEY: set maximum width for desktop aesthetic */
+}
+
+.cardbody-color {
+    padding: 0;
+}
+
+h2 {
+    color: #85d8ff;
+    text-shadow: 0 3px 12px #12161c;
+    letter-spacing: .05em;
+    font-weight: 700;
+    margin-bottom: 0.4em;
+}
+
+/* Form controls */
+.form-control {
+    background: rgba(31, 39, 55, 0.75);
+    border-radius: 13px;
+    border: none;
+    color: #e0e6f0;
+    padding: 1rem 1.2rem;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    box-shadow: 0 1.5px 6px rgba(0,0,0,0.10);
+    transition: background 0.18s, box-shadow 0.18s;
+}
+.form-control:focus {
+    background: rgba(31, 44, 67, 1);
+    border: 2px solid #7bbcff;
+    color: #FFF;
+    box-shadow: 0 0 13px #7ed6ff99;
+    outline: none;
+}
+::placeholder {
+    color: #a0b1c7 !important;
+    opacity: 1;
+}
+
+/* Buttons */
+.btn-color {
+    background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
+    color: #20283a;
+    font-weight: bold;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 6px 25px 0 rgba(80, 210, 255, 0.15);
+    font-size: 1.13rem;
+    transition: background 0.2s, box-shadow 0.2s, color 0.12s;
+}
+.btn-color:hover, .btn-color:active {
+    background: linear-gradient(90deg, #70c1ff 0%, #001e5a 100%);
+    color: #e0e6f0;
+    box-shadow: 0 2px 22px 0 #69e3ff66, 0 0 0 3px #1cb5e088;
+}
+
+/* Link */
+a.text-dark.fw-bold {
+    color: #76cfff !important;
+    text-shadow: 0 0 10px #223;
+    font-weight: bold;
+    transition: color 0.15s, text-shadow 0.2s;
+}
+a.text-dark.fw-bold:hover {
+    color: #fdfdfd !important;
+    text-shadow: 0 0 18px #54cfffcc;
+}
+
+/* Label text */
+.form-text {
+    color: #b6d9f6 !important;
+}
+
+/* For mobile view, reduce padding & card width */
+@media (max-width: 900px) {
+    .card.my-5 {
+        padding: 1.3rem 0.6rem;
+        margin: 2rem 0;
+        max-width: 98vw;
+    }
+    h2 { font-size: 1.3em; }
+}
+</style>
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <!-- <h2 class="text-center text-dark mt-5">BlogBridges</h2> -->
-            <br><br><br><br>
-            <div class="card my-5" style="background-color:#F0F8FF;">
-
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card my-5">
                 <form class="card-body cardbody-color p-lg-5" method="post">
                     {% csrf_token %}
                     <div class="text-center">
@@ -24,23 +145,18 @@
                     </div>
                     <div class="mb-3">
                         <input type="password" class="form-control" id="password" name="upassword"
-                            placeholder="password">
+                            placeholder="Password">
                     </div>
-                    <!-- <div class="mb-3">
-                        <input type="password" class="form-control" id="password" placeholder="Retype Your password">
-                    </div> -->
-                    <br>
-                    <div class="text-center"><button type="submit" class="btn btn-color px-5 mb-5 w-100">Sign
-                            Up</button>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-color px-5 mb-5 w-100">Sign Up</button>
                     </div>
-                    <div id="emailHelp" class="form-text text-center mb-5 text-dark">Have already an account ? <a
-                            href="loginn" class="text-dark fw-bold">login here</a>
+                    <div id="emailHelp" class="form-text text-center mb-5">Have already an account? 
+                        <a href="loginn" class="text-dark fw-bold">login here</a>
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 </div>
-
 {% endblock %}
