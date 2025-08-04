@@ -41,7 +41,7 @@ def loginn(request):
         userr = authenticate(request, username=name, password=password)
         if userr is not None:
             login(request, userr)
-            return redirect('/home')
+            return redirect('home-page')
         else:
             error_message = "Invalid username or password"
     return render(request, 'blog/login.html', {'error': error_message})
@@ -54,7 +54,7 @@ def newPost(request):
         content = request.POST.get('content')
         npost = models.Post(title = title,content=content,author=request.user)
         npost.save()
-        return redirect('/home')
+        return redirect('home-page')
     return render(request,'blog/newpost.html')
 
 @never_cache
