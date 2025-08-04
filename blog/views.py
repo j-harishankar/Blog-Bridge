@@ -3,28 +3,38 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from .models import Post
+from django.contrib.auth.decorators import login_required
 from . import models
+from django.views.decorators.cache import never_cache
 # Create your views here.
-
-
+@never_cache
+@login_required(login_url='/loginn')
 def home(request):
     context = {'posts':Post.objects.all()}
     return render(request,'blog/home.html',context)
 
 def signup(request):
+    error_message = None
+
     if request.method == 'POST':
         name = request.POST.get('uname')
-        email= request.POST.get('uemail')
+        email = request.POST.get('uemail')
         password = request.POST.get('upassword')
-        newUser = User.objects.create_user(username=name, email=email, password=password)
-        newUser.save()
-        return redirect('/loginn')
-    return render(request, 'blog/signup.html')
 
+        if User.objects.filter(username=name).exists():
+            error_message = "Username already taken"
+        elif User.objects.filter(email=email).exists():
+            error_message = "Email already registered"
+        else:
+            newUser = User.objects.create_user(username=name, email=email, password=password)
+            newUser.save()
+            return redirect('/loginn')
 
+    return render(request, 'blog/signup.html', {'error': error_message})
 
 
 def loginn(request):
+    error_message = None 
     if request.method == 'POST':
         name = request.POST.get('uname')
         password = request.POST.get('upassword')
@@ -33,9 +43,11 @@ def loginn(request):
             login(request, userr)
             return redirect('/home')
         else:
-            return redirect('/login')
-    return render(request, 'blog/login.html')
+            error_message = "Invalid username or password"
+    return render(request, 'blog/login.html', {'error': error_message})
 
+@never_cache
+@login_required(login_url='/loginn')
 def newPost(request):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -44,7 +56,12 @@ def newPost(request):
         npost.save()
         return redirect('/home')
     return render(request,'blog/newpost.html')
+
+@never_cache
+@login_required(login_url='/loginn')
 def myPost(request):
     context = {'posts':Post.objects.filter(author = request.user)}
     return render(request,'blog/mypost.html',context)
-
+def signOut(request):
+    logout(request)
+    return redirect('/loginn')

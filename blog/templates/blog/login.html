@@ -85,9 +85,14 @@ a.text-dark.fw-bold:hover { color: #7bbbff !important; }
         <div class="col-md-6 offset-md-3">
             <br><br><br>
             <div class="card my-5">
-
+                
                 <form class="card-body cardbody-color p-lg-5"  method="post">
                     {% csrf_token %}
+                    {% if error %}
+                    <div class="alert alert-danger text-center" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endif %}
                     <div class="text-center">
                         <img src="{% static 'image/logo.png'%}"
                             class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3" width="140px"

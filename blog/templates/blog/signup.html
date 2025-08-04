@@ -135,6 +135,12 @@ a.text-dark.fw-bold:hover {
                         <h2>Create An Account</h2>
                     </div>
                     <br>
+                    {% if error %}
+                    <div class="alert alert-danger text-center" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endif %}
+
                     <div class="mb-3">
                         <input type="text" class="form-control" id="Username" name="uname" aria-describedby="emailHelp"
                             placeholder="Your Name ">
