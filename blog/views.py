@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from . import models
 from django.views.decorators.cache import never_cache
 # Create your views here.
+
 @never_cache
 @login_required(login_url='/loginn')
 def home(request):
@@ -33,6 +34,7 @@ def signup(request):
     return render(request, 'blog/signup.html', {'error': error_message})
 
 
+
 def loginn(request):
     error_message = None 
     if request.method == 'POST':
@@ -45,6 +47,7 @@ def loginn(request):
         else:
             error_message = "Invalid username or password"
     return render(request, 'blog/login.html', {'error': error_message})
+
 
 @never_cache
 @login_required(login_url='/loginn')
@@ -62,6 +65,8 @@ def newPost(request):
 def myPost(request):
     context = {'posts':Post.objects.filter(author = request.user)}
     return render(request,'blog/mypost.html',context)
+
+
 def signOut(request):
     logout(request)
     return redirect('/loginn')
