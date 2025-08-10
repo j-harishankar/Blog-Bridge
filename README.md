@@ -1,13 +1,15 @@
 # Django Blog
 
 A simple blog application built with Django.
+Live Demo: https://django-blog-app-743225501073.asia-south1.run.app
+
 
 ## Features
 
 - User authentication (register, login, logout)
 - Create, edit, and delete blog posts
 - Comment on posts
-- Responsive UI using HTML templates
+- Responsive UI using HTML templatesa
 - Admin panel for managing posts and users
 
 ## Setup Instructions
