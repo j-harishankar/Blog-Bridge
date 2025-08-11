@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-!-@t#u(!it&!3f=pnh!0f)fm+ky0g3iy36o*ij8)mrg*eq88^e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -123,3 +123,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CSRF_TRUSTED_ORIGINS = [
+    "https://django-blog-app-743225501073.asia-south1.run.app",
+]
