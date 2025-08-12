@@ -66,6 +66,12 @@ def myPost(request):
     context = {'posts':Post.objects.filter(author = request.user)}
     return render(request,'blog/mypost.html',context)
 
+@never_cache
+@login_required(login_url='/loginn')
+def deletePost(request, post_id):
+    post = Post.objects.get(id=post_id, author=request.user)  # Only get user's own post
+    post.delete()
+    return redirect('my-post')
 
 def signOut(request):
     logout(request)

@@ -6,6 +6,7 @@ urlpatterns = [
     path('loginn/', views.loginn, name='login-page'),
     path('', views.home, name='home-page'),
     path('newpost/', views.newPost),
-    path('mypost/', views.myPost ),
-    path('signout/',views.signOut)
+    path('mypost/', views.myPost,name='my-post' ),
+    path('signout/',views.signOut),
+    path('delete/<int:post_id>/', views.deletePost, name='delete-post'),
 ]

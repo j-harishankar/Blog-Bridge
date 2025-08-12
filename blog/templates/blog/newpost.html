@@ -1,54 +1,129 @@
 {% extends 'blog/base.html' %}
-{% block content %}
 {% load static %}
-<div class="container custom-container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light w-100" >
-        
-        
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+{% block content %}
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto ">
-                <li><a href="/home"><img  class="w-50 "  src="{% static 'image/pho.png' %}" alt=""></a></li>
-               
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <div class="dropdown">
-                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Profile
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="/newpost">New Post</a>
-                      <a class="dropdown-item" href="/mypost">My Posts</a>
-                      <a class="dropdown-item" href="/signout">Sign Out</a>
-                    </div>
-                  </div>
-            </form>
+<style>
+    body {
+        background: linear-gradient(135deg, #0f0f0f, #050505);
+        color: white;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+    }
+
+    .navbar {
+        background: transparent !important;
+        padding: 20px;
+    }
+
+    .navbar-brand img {
+        width: 120px;
+    }
+
+    .profile-dropdown .btn {
+        background-color: rgba(0, 255, 255, 0.1);
+        color: cyan;
+        border: 1px solid cyan;
+    }
+
+    .profile-dropdown .dropdown-menu {
+        background-color: #111;
+        border: 1px solid #222;
+    }
+
+    .profile-dropdown .dropdown-item {
+        color: white;
+    }
+
+    .profile-dropdown .dropdown-item:hover {
+        background-color: #222;
+    }
+
+    .form-container {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 30px;
+        max-width: 800px;
+        margin: 40px auto;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+    }
+
+    .form-label, h1, h3 {
+        color: cyan;
+    }
+.form-control, textarea {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white !important;
+}
+
+.form-control:focus, textarea:focus {
+    outline: none;
+    border-color: cyan;
+    box-shadow: 0 0 10px cyan;
+    background-color: rgba(255, 255, 255, 0.08);
+    color: white !important; 
+}
+
+.form-control::placeholder,
+textarea::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+    .btn-primary {
+        background-color: cyan;
+        border: none;
+        color: black;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #00cccc;
+        transform: scale(1.05);
+    }
+</style>
+
+<div class="container text-center">
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="/home">
+        <img src="{% static 'image/pho.png' %}?v=2" alt="Logo">
+        </a>
+        <div class="ml-auto profile-dropdown">
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                    Profile
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/newpost">New Post</a>
+                    <a class="dropdown-item" href="/mypost">My Posts</a>
+                    <a class="dropdown-item" href="/signout">Sign Out</a>
+                </div>
+            </div>
         </div>
-
     </nav>
 
-    <form method="post">
-        {% csrf_token %}
-        <div class="container custom-container " style="max-width: 1250px;">
-            <br><br>
-            <h1 class="fw-bolder"> Make a new post.</h1>
-            <hr><br>
+    <div class="form-container">
+        <h1 class="fw-bolder text-center">Make a New Post</h1>
+        <hr style="border-color: rgba(255,255,255,0.2);">
+
+        <form method="post">
+            {% csrf_token %}
             <div class="mb-3">
-                <h3><label for="exampleInputEmail1" class="form-label">Heading/Title</label></h3>
-                <input type="text" class="form-control" id="exampleInputText" aria-describedby="emailHelp" name="title">
+                <h3><label for="exampleInputText" class="form-label">Heading/Title</label></h3>
+                <input type="text" class="form-control" id="exampleInputText" name="title">
             </div>
             <div class="form-group">
                 <h3><label for="exampleFormControlTextarea3">Content</label></h3>
                 <textarea class="form-control" id="exampleFormControlTextarea3" rows="7" name="content"></textarea>
             </div>
+            <br>
             <input class="btn btn-primary" type="submit" value="Submit">
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
-
-    {% endblock %}
+{% endblock %}

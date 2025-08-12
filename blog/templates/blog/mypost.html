@@ -1,61 +1,128 @@
 {% extends 'blog/base.html' %}
-{% block content %}
 {% load static %}
-<div class="container custom-container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light w-100" >
-        
-        
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+{% block content %}
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto ">
-                <li><a href="/home"><img  class="w-50 "  src="{% static 'image/pho.png' %}" alt=""></a></li>
-               
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <div class="dropdown">
-                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Profile
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="/newpost">New Post</a>
-                      <a class="dropdown-item" href="/mypost">My Posts</a>
-                      <a class="dropdown-item" href="/signout">Sign Out</a>
-                    </div>
-                  </div>
-            </form>
+<style>
+    body {
+        background: linear-gradient(135deg, #0f0f0f, #050505);
+        color: white;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+    }
+
+    .navbar {
+        background: transparent !important;
+        padding: 20px;
+    }
+
+    .navbar-brand img {
+        width: 120px;
+    }
+
+    .profile-dropdown .btn {
+        background-color: rgba(0, 255, 255, 0.1);
+        color: cyan;
+        border: 1px solid cyan;
+    }
+
+    .profile-dropdown .dropdown-menu {
+        background-color: #111;
+        border: 1px solid #222;
+    }
+
+    .profile-dropdown .dropdown-item {
+        color: white;
+    }
+
+    .profile-dropdown .dropdown-item:hover {
+        background-color: #222;
+    }
+
+    .post-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px auto;
+        width: 60%;
+        transition: transform 0.3s;
+    }
+
+    .post-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .post-author {
+        color: cyan;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    .post-date {
+        float: right;
+        color: #aaa;
+        font-size: 0.9rem;
+    }
+
+    .post-title {
+        font-size: 1.5rem;
+        margin: 10px 0;
+        color: white;
+    }
+
+    .post-content {
+        color: #ddd;
+    }
+
+    .btn-danger {
+        background-color: red;
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background-color: darkred;
+    }
+</style>
+
+<div class="container text-center">
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="/home">
+            <img src="{% static 'image/pho.png' %}" alt="Logo">
+        </a>
+        <div class="ml-auto profile-dropdown">
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                    Profile
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/newpost">New Post</a>
+                    <a class="dropdown-item" href="/mypost">My Posts</a>
+                    <a class="dropdown-item" href="/signout">Sign Out</a>
+                </div>
+            </div>
         </div>
-
     </nav>
 
-    </div>
-    <br>
-    <div class="container custom-container" style="max-width: 1350px; ">
-        <h1>My Posts </h1>
+    <h1 class="mt-4">My Posts</h1>
+    <div class="content-section mt-4">
         {% for post in posts %}
-        <article class="media content-section">
-
-            <div class="media-body" style="border: 1px solid black; padding: 23px; margin-bottom: 10px;">
-
-                <div class="article-metadata">
-                    <!-- <h3 aligh="left">{{ post.author }} </h3>
-                    <h5 aligh="right">{{ post.date_posted|date:"F d, Y" }}</h5> -->
-                    <h2 class="text-uppercase" style="text-align:left;float:left; color: #000000;">{{ post.author }}</h2>
-                    <h5 style="text-align:right;float:right;">{{ post.date_posted|date:"F d, Y" }}</h5>
-                    <hr style="clear:both;" />
-
-                </div>
-                <h3>{{ post.title }}</h3>
-                <p class="article-content">{{ post.content }}</p>
-                <br><br>
+        <div class="post-card">
+            <div>
+                <span class="post-author">{{ post.author }}</span>
+                <span class="post-date">{{ post.date_posted|date:"F d, Y" }}</span>
+                <div style="clear: both;"></div>
             </div>
-        </article>
+            <h3 class="post-title">{{ post.title }}</h3>
+            <p class="post-content">{{ post.content }}</p>
+
+            <!-- Delete button -->
+            <a href="{% url 'delete-post' post.id %}" class="btn btn-danger btn-sm mt-2">Delete</a>
+        </div>
+        {% empty %}
+        <p>No posts found.</p>
         {% endfor %}
     </div>
 </div>
 
-
-    {% endblock %}
+{% endblock %}
